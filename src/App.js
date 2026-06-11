@@ -15,7 +15,7 @@ function App() {
       setError("");
 
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=ea29904160ad86619425798c7bb78d7a&units=metric`
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
       );
 
       const data = await response.json();
