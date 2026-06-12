@@ -7,6 +7,7 @@ import forecastIcon from "./assets/weather-icon.webp";
 
 function App() {
   const [weather, setWeather] = useState(null);
+  const [forecast, setForecast] = useState([]);
   const [, setError] = useState("");
   const [, setLoading] = useState(false);
   const [city, setCity] = useState("Hyderabad");
@@ -25,10 +26,48 @@ function App() {
       if (data.cod !== 200) {
         setError("City not found");
         setWeather(null);
+        setForecast([]);
         return;
       }
 
       setWeather(data);
+      const forecastResponse = await fetch(
+  `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+);
+
+const forecastData = await forecastResponse.json();
+
+const groupedForecast = {};
+
+forecastData.list.forEach((item) => {
+  const date = item.dt_txt.split(" ")[0];
+
+  if (!groupedForecast[date]) {
+    groupedForecast[date] = {
+      date,
+      min: item.main.temp_min,
+      max: item.main.temp_max,
+      icon: item.weather[0].icon,
+      description: item.weather[0].description,
+    };
+  } else {
+    groupedForecast[date].min = Math.min(
+      groupedForecast[date].min,
+      item.main.temp_min
+    );
+
+    groupedForecast[date].max = Math.max(
+      groupedForecast[date].max,
+      item.main.temp_max
+    );
+  }
+});
+
+const dailyForecast = Object.values(groupedForecast).slice(0, 5);
+
+setForecast(dailyForecast);
+
+
     } catch (error) {
       setError("Something went wrong");
       setWeather(null);
@@ -71,7 +110,7 @@ function App() {
           />
 
           <div>
-            <h2>{Math.round(weather.main.temp)}°C</h2>
+            <h2>{weather.main.temp}°C</h2>
 
             <p>Humidity: {weather.main.humidity}%</p>
 
@@ -94,25 +133,27 @@ function App() {
         </div>
       </div>
 
-      <div className="forecast-container">
-        {[1, 2, 3, 4, 5].map((day) => (
-          <div key={day} className="forecast-card">
-            <h4>
-              {new Date(
-                Date.now() + day * 24 * 60 * 60 * 1000
-              ).toLocaleDateString("en-US", {
-                weekday: "short",
-              })}
-            </h4>
+        <div className="forecast-container">
+          {forecast.map((day) => (
+            <div key={day.date} className="forecast-card">
+              <h4>
+                {new Date(day.date).toLocaleDateString("en-US", {
+                  weekday: "short",
+                })}
+              </h4>
 
-            <img src={forecastIcon} alt="Forecast" />
+              <img
+                src={`https://openweathermap.org/img/wn/${day.icon}@2x.png`}
+                alt={day.description}
+              />
 
-            <p>{Math.round(weather.main.temp + day)}°</p>
+              <p>{Math.round(day.max)}°</p>
 
-            <p>{Math.round(weather.main.temp - day)}°</p>
-          </div>
-        ))}
-      </div>
+              <p>{Math.round(day.min)}°</p>
+            </div>
+          ))}
+        </div>
+
     </>
   )}
 </div>
