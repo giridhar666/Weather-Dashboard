@@ -1,68 +1,93 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f4f6f9;
+.weather-container {
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+  padding: 50px 20px;
 }
 
-.app {
-  min-height: 100vh;
+.weather-container h1 {
+  font-size: 3rem;
+  margin-bottom: 40px;
+}
+
+.search-box {
   display: flex;
   justify-content: center;
-  align-items: center;
+  margin-bottom: 50px;
 }
 
-.container {
-  width: 100%;
-  max-width: 450px;
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-}
-
-.container h1 {
-  text-align: center;
-}
-
-form {
-  display: flex;
-  gap: 10px;
-  margin: 20px 0;
-}
-
-form input {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-form button {
-  padding: 10px 16px;
-  border: none;
-  background: #4f46e5;
+.search-box input {
+  width: 300px;
+  padding: 15px;
+  border: 1px solid white;
+  border-radius: 10px 0 0 10px;
+  background: transparent;
   color: white;
-  border-radius: 6px;
+  outline: none;
+}
+
+.search-box input::placeholder {
+  color: white;
+}
+
+.search-box button {
+  padding: 15px 30px;
+  border: none;
+  background: #f47b20;
+  color: white;
   cursor: pointer;
+  border-radius: 0 10px 10px 0;
 }
 
-.weather-card {
-  text-align: center;
-  padding: 25px;
-  background: #eef2ff;
-  border-radius: 12px;
+.weather-info {
+  display: flex;
+  justify-content: center;
+  gap: 100px;
+  align-items: center;
+  margin-bottom: 60px;
+  flex-wrap: wrap;
 }
 
-.weather-card h1 {
+.weather-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.weather-left img {
+  width: 100px;
+}
+
+.weather-left h2 {
+  font-size: 4rem;
+}
+
+.weather-right h2 {
+  font-size: 2rem;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.forecast-card {
+  padding: 20px;
+  border-radius: 15px;
+  backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.15);
+  min-width: 120px;
+}
+
+.forecast-card img {
+  width: 50px;
   margin: 10px 0;
-  font-size: 48px;
 }
 
-.weather-details {
-  margin-top: 20px;
-}
-
-.error {
-  color: red;
-  text-align: center;
+.forecast-card p {
+  margin: 5px 0;
 }
