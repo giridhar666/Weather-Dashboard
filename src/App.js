@@ -3,13 +3,12 @@ import "./App.css";
 import bgImage from "./assets/weather-bg.webp";
 import forecastIcon from "./assets/weather-icon.webp";
 
-import SearchBar from "./components/SearchBar";
-import WeatherCard from "./components/WeatherCard";
+
 
 function App() {
   const [weather, setWeather] = useState(null);
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [, setError] = useState("");
+  const [, setLoading] = useState(false);
   const [city, setCity] = useState("Hyderabad");
 
   const fetchWeather = async (city) => {
